@@ -1,3 +1,4 @@
+### Plants-project :potted_plant: :cherry_blossom:
 ### Installation:
 - npm install
 - create a database.json file in database directory. 
