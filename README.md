@@ -1,15 +1,28 @@
+### Instalation:
+- npm install
+- create a database.json file in database directory. 
+
+```javascript
+{
+    "Products":[],
+    "Users":[],
+    "Carts":[]
+}
+```
+
 ### Projektuppgift: Node
 Er uppgift är att skriva ett REST API för en webbshop, med hjälp av TDD. Det betyder att ni så att säga ska koda baklänges:
 
-Utgå från kravspecifikationen (denna instruktion)
-Diskutera kraven tills alla i gruppen förstår dem
-Hoppa över user stories
-Formulera acceptanskriterier för kraven, om det behövs
-Hitta på lämpliga testfall
-Skriv ett testfall i taget → skriv sedan kod som gör testfallet grönt → refaktorera sedan tills koden är clean
-Obs! I ett riktigt projekt hade vi börjat från andra hållet:
+- Utgå från kravspecifikationen (denna instruktion)
+- Diskutera kraven tills alla i gruppen förstår dem
+- Hoppa över user stories
+- Formulera acceptanskriterier för kraven, om det behövs
+- Hitta på lämpliga testfall
+- Skriv ett testfall i taget → skriv sedan kod som gör testfallet grönt → refaktorera sedan tills koden är clean
+
+***Obs! I ett riktigt projekt hade vi börjat från andra hållet:
 Ta reda på vad användarna ska kunna göra genom att konstruera user stories
-Ta fram de endpoints som behövs för att lösa våra user stories
+Ta fram de endpoints som behövs för att lösa våra user stories***
 
 Bestäm vilken sorts produkter webbshopen ska sälja.
 Backend-koden ska använda Express, Jest och SuperTest. Lästips
@@ -54,6 +67,3 @@ interface CartItem {
 }
 Varje endpoint ska testas med minst ett testfall!
 
-Sätt igång:
-Clona denna repo
-npm install
