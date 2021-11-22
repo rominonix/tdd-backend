@@ -1,41 +1,52 @@
-const request = require("supertest");
-let assert = require('assert') 
+// const request = require("supertest");
+// const app = require("../app");
 
-const app = require("./app");
+// // // const assert = require("assert");
 
-const requestWithSupertest = request(app);
+// // const supertest = request(app);
 
+// const userTest = describe("Test user endpoints", () => {
+//   test("GET /api/users - Checking for Kalle", (done) => {
+//     request(app)
+//       .get("/api/users")
+//       .expect("Content-Type", /json/)
+//       .expect(200, /Kalle/)
+//       .end((err, res) => {
+//         if (err) return done(err);
+//         return done();
+//       });
+//   });
 
+//   test("GET /api/users - Checking Sven-Åke", (done) => {
+//     request(app)
+//       .get("/api/users")
+//       .expect("Content-Type", /json/)
+//       .expect(200, /Sven-Åke/)
+//       .end((err, res) => {
+//         if (err) return done(err);
+//         return done();
+//       });
+//   });
 
-describe("Test Endpoints", () => {
-    test("GET /api/users", async () => {
-      const res = await requestWithSupertest.get("/api/users")  
-      expect(res.status).toEqual(200);
-      expect(res.type).toEqual(expect.stringContaining('json'));
-      expect(Array.isArray(res.body.data))
-      // expect((res)=>{
-        // res.body.data.length = 5
-        // typeof(res.body.data) == "string"
-        // Array.isArray(res.body.data)
-      // })
-      // expect(firstLine).toEqual(20);
-    })
+//   test("GET /api/usersAAAA - Checking for non-existent page", (done) => {
+//     request(app)
+//       .get("/api/usersAAAA")
+//       .expect(404)
+//       .end((err, res) => {
+//         if (err) return done(err);
+//         return done();
+//       });
+//   });
 
-    // test("GET /api/users", (done) => {
-      
-    //   request(app)
+//   test("GET /api/users - Checking ", async () => {
+//     const res = await request(app).get("/api/users");
+//     let myVar = true;
+//     expect(res.status).toEqual(200);
+//     expect(res.type).toEqual(expect.stringContaining("json"));
+//     expect(Array.isArray(res.body.data));
+//     expect(typeof myVar).toEqual("boolean");
+//     expect(res.body.data[2].name).toEqual("Anders");
+//   });
+// });
 
-    //   .get("/api/users")
-    //   .expect("Content-Type", /json/)
-    //   .expect(200)
-    //   .then(response => {
-    //     assert(response.body[0].name, 'Kalle')
-    //     done();
-    // })
-    // .catch(err => done(err))
-
-    // })
-
-
-    
-});
+// module.exports = userTest;

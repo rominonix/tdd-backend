@@ -1,4 +1,4 @@
-const { Users } = require("../database.json");
+const { Users } = require("../database/database.json");
 const { Router } = require("express");
 
 // req controller
