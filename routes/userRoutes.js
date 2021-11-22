@@ -6,8 +6,7 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("/users", (req, res) => {
-//   console.log(Users);
-//   res.setHeader('content-type', 'application/json');
+
   res.status(200).json({data : Users});
 });
 router.get("/users/:id", (req, res) => {

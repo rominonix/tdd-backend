@@ -9,13 +9,13 @@ const db = require("../database/connection");
 // const jwt = require("jsonwebtoken");
 
 const User = db.define("User", {
-  
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   login: {
     type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
   },
 });
