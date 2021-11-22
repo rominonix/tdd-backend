@@ -16,6 +16,7 @@ const User = db.define("User", {
   },
   login: {
     type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
   },
 });
