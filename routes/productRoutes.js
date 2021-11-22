@@ -5,15 +5,9 @@ const router = Router();
 
 
 router.get('/products', productControllers.getProducts)
-
-
-
-// router.get("/products/:id", (req, res) => {
-//   res.send("get product by id");
-// });
-// router.post("/products", (req, res) => {
-//   res.send("post product");
-// });
+router.get("/products/:id", productControllers.getProductById);
+router.post("/products", productControllers.createNewProduct) 
+// router.put("/products/:id", productControllers.updateProductById) 
 // router.delete("/products/:id", (req, res) => {
 //   res.send("delete product by id");
 // });

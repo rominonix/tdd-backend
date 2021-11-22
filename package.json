@@ -4,7 +4,7 @@
   "description": "Er uppgift är att skriva ett REST API för en webbshop, med hjälp av TDD. Det betyder att ni så att säga ska koda baklänges:",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
