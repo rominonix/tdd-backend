@@ -1,5 +1,5 @@
 const express = require("express");
-// const routes = require("./routes")
+const routes = require("./routes")
 require('dotenv').config()
 
 const app = express();
@@ -9,7 +9,7 @@ app.use(express.json());
 
 // app.use("/api", routes.productRoutes)
 // app.use("/api", routes.cartRoutes)
-// app.use("/api", routes.userRoutes)
+app.use("/api", routes.userRoutes)
 
 const PORT = process.env.PORT || 5000
 
