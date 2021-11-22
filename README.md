@@ -1,14 +1,12 @@
 ### Plants-project :potted_plant: :cherry_blossom:
 ### Installation:
 - npm install
-- create a database.json file in database directory. 
+ 
+#### Run database and seed file.
 
-```javascript
-{
-    "Products":[],
-    "Users":[],
-    "Carts":[]
-}
+```
+node database/setup.js && node database/seed.js
+
 ```
 
 ### Projektuppgift: Node
