@@ -1,24 +1,26 @@
-const {InvalidBody}=require('../errors/index')
-const User=require('../models/user')
+const { InvalidBody } = require('../errors/index')
+const User = require('../models/user')
 
-module.exports={
-    async all(req,res,next){
+module.exports = {
+    async all(req, res, next) {
+        try {
+            const users = await User.findAll({ attributes: ['name', 'login'] })
+            res.json({ users })
+        } catch (error) { next(error) }
+    },
+
+    async getUserById(req, res, next) {
+        const {login}=req.params
+        const user=await User.findOne({
+            where:{ login }
+        })
         try{
-            const users = await User.findAll({attributes:['name','login']})
-            res.json({users})
-        }catch(error){next(error)}    
-    },    
-
-    // async register(req,res,next){
-    //     try{
-    //         const {email,name,password}=req.body
-    //         if( !email || !name || !password ){
-    //             throw new InvalidBody(['email','name','password'])
-    //         }
-    //         const user  = await User.create({email,name,password})
-    //         res.json({message:'You have registered!'})            
-    //     }catch(error){next(error)}    
-    // },
+            if(!user){
+                throw new userNotFound(login)
+            }
+            res.json({user})            
+        }catch(error){next(error)}
+    },
     // async login(req,res,next){
     //     try{
     //         const {email,password}=req.body
