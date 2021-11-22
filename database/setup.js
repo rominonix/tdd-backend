@@ -1,6 +1,6 @@
 const db = require("./connection");
-require("../models/User");
-require("../models/Product");
-require("../models/Cart");
+require("../models/user");
+require("../models/product");
+require("../models/cart");
 
 db.sync();

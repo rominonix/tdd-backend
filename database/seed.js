@@ -9,13 +9,17 @@ User.create({ name: "Sven", login: uuidv4() });
 User.create({ name: "Nilufar", login: uuidv4() });
 User.create({ name: "Romina", login: uuidv4() });
 
-const randomPrice = Math.floor(Math.random() * 100);
+const productSeed = () => {
+  let products = ["Monstera", "Lavender", "Bamboo", "Cactus", "Snake-plant"];
 
-Product.create({ id:uuidv4(), name: "Monstera", price: randomPrice });
-Product.create({ id:uuidv4(), name: "Cactus", price: randomPrice });
-Product.create({ id:uuidv4(), name: "Bamboo", price: randomPrice });
-Product.create({ id:uuidv4(), name: "Orchid", price: randomPrice });
-Product.create({ id:uuidv4(), name: "Snake-plant", price: randomPrice });
+  for (const product of products) {
+    let randomPrice = Math.floor(Math.random(10) * 100);
+    Product.create({ id: uuidv4(), name: product, price: randomPrice });
+  }
+};
+
+productSeed();
+
 
 // let Products = [
 //     "Monstera",
