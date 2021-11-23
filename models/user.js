@@ -1,5 +1,5 @@
-const { DataTypes, UUIDV4 } = require("sequelize");
-const db = require("../database/connection");
+const { DataTypes } = require("sequelize");
+const db = require("../connection");
 // const bcrypt = require("bcryptjs");
 // const {
 //   InvalidCredentials,

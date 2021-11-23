@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 
-// app.use("/api", routes.productRoutes)
+app.use("/api", routes.productRoutes)
 // app.use("/api", routes.cartRoutes)
 app.use("/api", routes.userRoutes)
 

@@ -1,6 +1,6 @@
-//const { InvalidBody } = require('../errors/index')
+const { InvalidBody , userNotFound} = require('../errors/index')
 const User = require('../models/user')
-const { v4: uuidv4 } = require("uuid");
+const { v5: uuidv5 } = require("uuid");
 
 module.exports = {
     async allUser(req, res, next) {
@@ -11,24 +11,28 @@ module.exports = {
     },
 
     async getUserByLogin(req, res, next) {
-        const { login } = req.params
+        const  login  = req.params.login
         const user = await User.findOne({
-            where: { login }
+             where: { login }
         })
+        console.log("login",login);
+        console.log("User",User);
+        console.log("users",user)
         try {
-            // if (!user) {
-            //     throw new userNotFound(login)
-            // }
+            if (!user) {
+                throw new userNotFound(login)
+            }
             res.json({ user })
         } catch (error) { next(error) }
     },
+
     async creatUser(req, res, next) {
 
         try {
             const { login, name } = req.body
-            // if (!login || !name) {
-            //     throw new InvalidBody(['login', 'name'])
-            // }
+            if (!login || !name) {
+                throw new InvalidBody(['login', 'name'])
+            }
             const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
 
             

@@ -37,13 +37,13 @@ class tokenExpired extends productError{
         this.errorCode=401
     }
 }
-class productNotFound extends productError{
+class userNotFound extends productError{
     constructor(login){
         super()
-        this.message=`product with login ${login} not found`
+        this.message=`user with login ${login} not found`
         this.errorCode=404
     }
 }
 
 
-module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,productNotFound,Forbidden }
+module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,userNotFound,Forbidden }

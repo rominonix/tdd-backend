@@ -1,6 +1,6 @@
 // const fs = require('fs');
-const User = require("../models/user");
-const Product = require("../models/product");
+const User = require("./models/user");
+const Product = require("./models/product");
 const { v4: uuidv4 } = require("uuid");
 
 User.create({ name: "Kalle", login: uuidv4() });
