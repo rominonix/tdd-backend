@@ -11,13 +11,10 @@ module.exports = {
     },
 
     async getUserByLogin(req, res, next) {
-        const  login  = req.params.login
+        const  {login}  = req.params
         const user = await User.findOne({
              where: { login }
         })
-        console.log("login",login);
-        console.log("User",User);
-        console.log("users",user)
         try {
             if (!user) {
                 throw new userNotFound(login)
@@ -27,24 +24,22 @@ module.exports = {
     },
 
     async creatUser(req, res, next) {
-
         try {
             const { login, name } = req.body
             if (!login || !name) {
                 throw new InvalidBody(['login', 'name'])
             }
-            const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
-
-            
+            const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';    
             const userLogin = uuidv5(login, MY_NAMESPACE);
-            const newUser = await Recept.create({  name, userLogin })
+            const newUser = await User.create({  name, login: userLogin })
             res.json({ newUser })
         } catch (error) { next(error) }
     },
+
     async deleteUser(req,res,next){
         try{
             const {login}=req.params
-            const users = await Recept.findOne({where:{login}})
+            const users = await User.findOne({where:{login}})
             await users.destroy()
             res.json({message:'user has deleted'})
         }catch(error){next(error)}
