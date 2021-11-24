@@ -8,11 +8,10 @@ module.exports = {
       const products = await Product.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] },
       });
-      //   if (products.length === 0) {
-      //     throw new Error();
-      //   }
+        if (products.length === 0) {
+          throw new Error('This database is empty');
+        }
       res.status(200).json({ products });
-      res.json({ products });
     } catch (error) {
       next(error);
     }
@@ -85,7 +84,7 @@ module.exports = {
         throw new Error(`Product with ${id} doesn't exist`);
       }
       await getProduct.destroy();
-      res.json({ message: "Product has deleted!" });
+      res.json({ message: "Product successfully deleted." });
     } catch (error) {
       next(error);
     }
