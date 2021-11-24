@@ -1,41 +1,148 @@
 const request = require("supertest");
-let assert = require('assert') 
+const app = require("../app");
 
-const app = require("./app");
-
-const requestWithSupertest = request(app);
-
-
-
-describe("Test Endpoints", () => {
-    test("GET /api/users", async () => {
-      const res = await requestWithSupertest.get("/api/users")  
-      expect(res.status).toEqual(200);
-      expect(res.type).toEqual(expect.stringContaining('json'));
-      expect(Array.isArray(res.body.data))
-      // expect((res)=>{
-        // res.body.data.length = 5
-        // typeof(res.body.data) == "string"
-        // Array.isArray(res.body.data)
-      // })
-      // expect(firstLine).toEqual(20);
-    })
-
-    // test("GET /api/users", (done) => {
-      
-    //   request(app)
-
-    //   .get("/api/users")
-    //   .expect("Content-Type", /json/)
-    //   .expect(200)
-    //   .then(response => {
-    //     assert(response.body[0].name, 'Kalle')
-    //     done();
-    // })
-    // .catch(err => done(err))
-
-    // })
-
-
-    
+/**
+ * Testing get all user endpoint
+ */
+describe('GET /api/users', function () {
+  it('respond with json containing a list of all users', function (done) {
+    request(app)
+      .get('/api/users')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
 });
+
+/**
+* Testing get a user endpoint by giving an existing user
+*/
+describe('GET /api/users/:login', function () {
+  it('respond with json containing a single user', function (done) {
+    request(app)
+      .get('/api/users/ce6ab499-60fe-43b4-9a1c-e4590edc0540')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+});
+  // it('Testing get a user endpoint by giving a non-existing user', function (done) {
+  //   request(app)
+  //     .get('/api/users/123')
+  //     .set('Accept', 'application/json')
+  //     // .expect('Content-Type', /json/)
+  //     .expect(404) //expecting HTTP status code
+  //     .expect('"Error: user with login 123 not found"') // expecting content value
+  //     // .end((err) => {
+  //     //   if (err) return done(err);
+  //     //   done();
+  //     // });
+  // });
+
+
+
+
+/**
+* Testing post user endpoint
+*/
+describe('POST /api/users', function () {
+  let data = {"login": "12", "name": "dmmy"}
+  it('respond with 200 created', function (done) {
+    request(app)
+    .post('/api/users')
+    .send(data)
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .end((err) => {
+      if (err) return done(err);
+      done();
+    });
+  });
+});
+
+/**
+* Testing delete user endpoint
+*/
+describe('DELETE /api/users',function(){
+  it('should respond 200 deleted',function(done){
+    request(app)
+    .delete('/api/users/7f6aba12-7591-54b3-9288-d2cc755640ab')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .expect((res) => {
+      expect(res.body.message).toEqual('user has deleted');
+    })
+    .end((err)=>{
+      if(err) return done(err)
+      done();
+    })
+  });
+})
+
+
+// test('delete post', (done) => {
+//   request(app)
+//    .delete(`/api/post/${post.id}`)
+//    .set('Authorization', `Bearer ${token}`)
+//    .expect('Content-Type', /json/)
+//    .expect((res) => {
+//     expect(res.body.message).toEqual('Your post successfully deleted.');
+//    })
+//    .expect(200, done);
+//  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const assert = require("assert");
+
+// describe("POST /api/users",()=>{
+//   describe("given a name and login",()=>{
+//     //should save the name and login to the database
+//     //should respond with a json object containg whole new user info
+//     test("should respond with a 200 status code", async ()=>{
+//       const response = await request(app).post("/api/users").send({
+//         "name":"name",
+//         "login":"login"
+//       })
+//       expect(response.statusCode).toBe(200)
+//     })
+//     test("should specify json in the content type header",async()=>{
+//       const response = await request(app).post("/api/users").send({
+//         "name":"name",
+//         "login":"login"
+//       })
+//       expect(response.headers['content-type']).toBe(expect.stringContaining("json"))
+//     })
+//   })
+//   describe("when the name and login is missing",()=>{
+//     //should respond with a status code 400
+
+//   })
+//   describe("when the name and login is not a string",()=>{
+
+//   })
+// })
