@@ -3,20 +3,24 @@ const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 
 module.exports = {
-  getProducts(req, res, next) {
+  async getProducts(req, res, next) {
     try {
-    const products = Product.findAll({})
-    res.status(200).json({products})
+      const products = await Product.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      });
+      //   if (products.length === 0) {
+      //     throw new Error();
+      //   }
+      res.status(200).json({ products });
+      res.json({ products });
     } catch (error) {
       next(error);
     }
   },
 
- async getProductById(req, res, next) {
+  async getProductById(req, res, next) {
     try {
       const { id } = req.params;
-     
-      //   const productById = Products.findOne((product) => product.id === id);
       const product = await Product.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -26,103 +30,64 @@ module.exports = {
         },
       });
 
-      // if(!id) {throw new ProductsNotFound()}
+      if (!id) {
+        throw new Error("You must to give a product id");
+      }
       res.json({ product });
     } catch (error) {
       next(error);
     }
   },
 
-
-
-//   async getUserById(req, res, next) {
-//     try {
-//         const { id } = req.params
-//         const user = await User.findOne({
-//             attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }, where: {
-//                 id: {
-//                     [Op.eq]: id
-//                 }
-//             }
-//         })
-//         if (!user) { throw new UserNotFound() }
-//         res.json({ user })
-//     } catch (error) { next(error) }
-
-// },
-  createNewProduct(req, res, next) {
+  async createNewProduct(req, res, next) {
     try {
       let { name, price } = req.body;
+      // if( !name || !price){ throw new InvalidBody(['name','price'])}
       let id = uuidv4();
-      let newProduct = { id: id, name: name, price: price };
-
-      // let result = Products.push(newProduct);
-      let result = [...Products, newProduct];
-
-      Product.push(result);
-
-      console.log(Product);
-
-      // console.log(typeof(result));
-
-      // console.log(result);
-
-      // const newProduct = Products.create({id, name, price})
-      res.json({ message: `You have registered ${result}!` });
+      let newProduct = await Product.create({
+        id: id,
+        name: name,
+        price: price,
+      });
+      res.json({
+        message: `You have registered a new product! Product name is: ${newProduct.name}!`,
+      });
     } catch (error) {
       next(error);
     }
   },
 
-  //   async create(req,res,next){
-  //     try{
-  //         let {email,name,password,role}=req.body
-  //         if( !email || !name || !password || !role){
-  //             throw new InvalidBody(['email','name','password','role'])
-  //         }
-  //          password = bcryptjs.hashSync(password, 10)
-  //          const newUser  = await User.create({email,name,password,role})
-  //         res.json({message:`You have registered ${newUser.role}!`})
-  //     }catch(error){next(error)}
-  // },
+  async updateProductById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { name, price } = req.body;
+      const field = {};
+      if (name) field.name = name;
+      if (price) field.price = price;
 
-  // updateProductById(req, res, next){
-  //   const id = res.Products.id
-  //   try{
-  //     const { name, price} = req.body
-  //     if(!id||!name || !price) {
-  //       throw new InvalidBody()
-  //     }
-  //     const updateProduct = Products.update(name, price)
-  //     res.json({updateProduct, msn: "product updated"})
-  //   }catch(error)
-  //   {next(error)}
-  // },
+      const getProduct = await Product.findOne({ where: { id } });
+      if (!getProduct) {
+        throw new Error(`Product with id: ${id} doesn't exist`);
+      }
 
-  // deleteProductById(req, res, next){
+      await Product.update(field, { where: { id } });
+      res.json({ message: "Product has updated!" });
+    } catch (error) {
+      next(error);
+    }
+  },
 
-  // },
-
-  //   User.updatePassword = async (email, newPassword) => {
-  //     const user = await User.findOne({ where: { email } })
-  //     if (!user) { throw new InvalidCredentials() }
-  //     else {
-  //         const newPassHash = bcryptjs.hashSync(newPassword, 10)
-  //         const newPass = await User.findOne({ where: { email } })
-  //         newPass.password = newPassHash
-  //         await newPass.save()
-  //     }
-  // }
-
-  //   async updateUserPassword(req, res, next) {
-  //     const email = res.user.email
-  //     try {
-  //         const { newPassword } = req.body
-  //         if (!email || !newPassword) {
-  //             throw new InvalidBody()
-  //         }
-  //         const newPassToDb = await User.updatePassword(email, newPassword)
-  //         res.json({ newPassToDb, msn: "Your profile was updated successfully" })
-  //     } catch (error) { next(error) }
-  // },
+  async deleteProductById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const getProduct = await Product.findOne({ where: { id } });
+      if (!getProduct) {
+        throw new Error(`Product with ${id} doesn't exist`);
+      }
+      await getProduct.destroy();
+      res.json({ message: "Product has deleted!" });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
