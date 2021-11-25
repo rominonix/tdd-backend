@@ -45,5 +45,15 @@ class productNotFound extends productError{
     }
 }
 
+class cartItemNotFound extends productError{
+    constructor(ProductId){
+        super()
+        this.message=`product with id ${ProductId} not found`
+        this.errorCode=400
+    }
+}
 
-module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,productNotFound,Forbidden }
+
+
+
+module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,productNotFound,Forbidden,cartItemNotFound }

@@ -1,6 +1,7 @@
 // const fs = require('fs');
-const User = require("../models/user");
-const Product = require("../models/product");
+const User = require("./models/user");
+const Product = require("./models/product");
+const Cart = require("./models/cart");
 const { v4: uuidv4 } = require("uuid");
 
 User.create({ name: "Kalle", login: uuidv4() });
@@ -17,6 +18,9 @@ Product.create({ id:uuidv4(), name: "Bamboo", price: randomPrice });
 Product.create({ id:uuidv4(), name: "Orchid", price: randomPrice });
 Product.create({ id:uuidv4(), name: "Snake-plant", price: randomPrice });
 
+
+
+Cart.create({ amount: 1, ProductId: "f7bd1b82-e3cf-4252-b57a-3dbe0dccda13" ,UserLogin:"ce6ab499-60fe-43b4-9a1c-e4590edc0540"});
 // let Products = [
 //     "Monstera",
 //     "Palletes",
