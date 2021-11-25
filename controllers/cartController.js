@@ -35,7 +35,7 @@ module.exports={
                 throw new unauthorized()
             }
             await cartItem.destroy()
-            res.json({message:'recept has deleted'})
+            res.json({message:'cart item has deleted'})
         }catch(error){next(error)}
     },
 }
