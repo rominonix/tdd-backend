@@ -1,6 +1,12 @@
 const Product = require("../models/product");
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
+const { InvalidBody } = require("../errors/index");
+const { isWord } = require("../utils");
+
+// const { ne } = require("sequelize/dist/lib/operators");
+
+// const { isValidUuid } = require("../utils");
 
 module.exports = {
   async getProducts(req, res, next) {
@@ -8,9 +14,9 @@ module.exports = {
       const products = await Product.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] },
       });
-        if (products.length === 0) {
-          throw new Error('This database is empty');
-        }
+      if (products.length === 0) {
+        throw new Error("This database is empty");
+      }
       res.status(200).json({ products });
     } catch (error) {
       next(error);
@@ -20,6 +26,10 @@ module.exports = {
   async getProductById(req, res, next) {
     try {
       const { id } = req.params;
+
+      // if(!isValidUuid) {
+      //   throw new Error("This id need have a uuid format");
+      // }
       const product = await Product.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -30,7 +40,7 @@ module.exports = {
       });
 
       if (!id) {
-        throw new Error("You must to give a product id");
+        throw new Error("You must to give a valid product id");
       }
       res.json({ product });
     } catch (error) {
@@ -41,15 +51,21 @@ module.exports = {
   async createNewProduct(req, res, next) {
     try {
       let { name, price } = req.body;
-      // if( !name || !price){ throw new InvalidBody(['name','price'])}
+
+      // if (!name || !price) {
+      //   throw new InvalidBody();
+      // }
+      if (!isWord(name)) {
+        throw new Error("The name must be words");
+      }
       let id = uuidv4();
       let newProduct = await Product.create({
         id: id,
         name: name,
         price: price,
       });
-      res.json({
-        message: `You have registered a new product! Product name is: ${newProduct.name}!`,
+      res.status(201).json({
+        message: "You have registered a new product!",
       });
     } catch (error) {
       next(error);
