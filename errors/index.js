@@ -43,7 +43,16 @@ class userNotFound extends productError{
         this.message=`user with login ${login} not found`
         this.errorCode=404
     }
+    
+}
+class    userIsExist extends productError{
+    constructor(){
+        super()
+        this.message=`user has already created`
+        this.errorCode=405
+    }
+    
 }
 
 
-module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,userNotFound,Forbidden }
+module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,userNotFound,Forbidden ,userIsExist}
