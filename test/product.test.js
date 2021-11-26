@@ -110,20 +110,23 @@ describe("Test product endpoints", () => {
 
   test("PUT /api/products/:id - Check if message from body is 'Product has updated!'", async () => {
     const updateProduct = { name: "Hortensia", price: 78 };
-    const res = await request(app).put(`/api/products/${id}`).send(updateProduct);
+    const res = await request(app)
+      .put(`/api/products/${id}`)
+      .send(updateProduct);
     const actualMessage = res.body.message;
-    const expected = "Product has updated!"
+    const expected = "Product has updated!";
     expect(actualMessage).toBe(expected);
   });
 
   test("PUT /api/products/:id - Check if key name is not word and expected message 'Name must be words'", async () => {
-    const updateProduct = { name: 999 , price: 78 };
-    const res = await request(app).put(`/api/products/${id}`).send(updateProduct)
-    const actualMessage = res.body.message
-    const expected = "Name must be words"
+    const updateProduct = { name: 999, price: 78 };
+    const res = await request(app)
+      .put(`/api/products/${id}`)
+      .send(updateProduct);
+    const actualMessage = res.body.message;
+    const expected = "Name must be words";
     expect(actualMessage).toBe(expected);
   });
-
 
   //----------------- Test DELETE /api/products/:id ------------------- //
 
@@ -140,7 +143,7 @@ describe("Test product endpoints", () => {
   // });
 
   // test("DELETE /api/products/:id - Check if message from body is 'Product successfully deleted.'", async () => {
-   
+
   //   const res = await request(app).delete('/api/products/498188e4-02f8-412b-a730-f2778a397ef5')
   //   const actualMessage = res.body.message;
   //   console.log("kkk", actualMessage);
@@ -149,7 +152,7 @@ describe("Test product endpoints", () => {
   // });
 
   // test("DELETE /api/products/:id - Check if message from body is 'Product doesn't exist'", async () => {
-   
+
   //   const res = await request(app).delete('/api/products/06a8fdfb-07c8-4e21-8ede-262d64ac70e6')
   //   const actualMessage = res.body.message;
   //   console.log("kkk", actualMessage);
