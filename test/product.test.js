@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { isValidUuid, isWord } = require("../utils");
-let id = "809e39b4-9ab2-4b90-9b30-8f8c425e9590";
+let id = "da5499de-bcef-41b3-9f7f-b6e536cb1e4c";
 
 describe("Test product endpoints", () => {
   //----------------- Test GET /api/products/ ------------------- //
@@ -127,22 +127,33 @@ describe("Test product endpoints", () => {
 
   //----------------- Test DELETE /api/products/:id ------------------- //
 
-  // Test DELETE /api/products/:id
-
-  // test("DELETE /api/products/:id", (done) => {
+  // test("DELETE /api/products/:id - Check if content-type are JSON and status 200", (done) => {
   //   request(app)
-
-  //     .delete(`/api/products/${id}`)
-  //     // .expect("Content-Type", /json/)
+  //     .delete(`/api/products/62eae9d5-edd2-4511-a8da-27620e35457b`)
+  //     .set("Accept", "application/json")
+  //     .expect("Content-Type", /json/)
   //     .expect(200)
-  //     .expect((res) => {
-  //       expect(res.body.message).toEqual('Product successfully deleted.');
-  //      })
-  //      .end((err, res) => {
+  //     .end((err) => {
   //       if (err) return done(err);
-  //       id = req.params
-  //       return done();
+  //       done();
   //     });
   // });
-  // test legth after delete product
+
+  // test("DELETE /api/products/:id - Check if message from body is 'Product successfully deleted.'", async () => {
+   
+  //   const res = await request(app).delete('/api/products/498188e4-02f8-412b-a730-f2778a397ef5')
+  //   const actualMessage = res.body.message;
+  //   console.log("kkk", actualMessage);
+  //   const expected = "Product successfully deleted."
+  //   expect(actualMessage).toBe(expected);
+  // });
+
+  // test("DELETE /api/products/:id - Check if message from body is 'Product doesn't exist'", async () => {
+   
+  //   const res = await request(app).delete('/api/products/06a8fdfb-07c8-4e21-8ede-262d64ac70e6')
+  //   const actualMessage = res.body.message;
+  //   console.log("kkk", actualMessage);
+  //   const expected = "Product doesn't exist"
+  //   expect(actualMessage).toBe(expected);
+  // });
 });

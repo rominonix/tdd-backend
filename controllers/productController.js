@@ -102,12 +102,18 @@ module.exports = {
   },
 
   async deleteProductById(req, res, next) {
+    // console.log("bbbb");
+    // if(this.getProducts.length <=1){
+    //   console.log("jajjaak");
+    // }
     try {
       const { id } = req.params;
       const getProduct = await Product.findOne({ where: { id } });
       if (!getProduct) {
-        throw new Error(`Product with ${id} doesn't exist`);
+        res.json({ message: `Product doesn't exist` });
+        // throw new Error(`Product with ${id} doesn't exist`);
       }
+      
       await getProduct.destroy();
       res.json({ message: "Product successfully deleted." });
     } catch (error) {
