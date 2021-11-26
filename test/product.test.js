@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { isValidUuid, isWord } = require("../utils");
-let id = "6aea66a5-b636-4f5e-8df6-fbb98f053657";
+let id = "809e39b4-9ab2-4b90-9b30-8f8c425e9590";
 
 describe("Test product endpoints", () => {
   //----------------- Test GET /api/products/ ------------------- //
@@ -74,7 +74,7 @@ describe("Test product endpoints", () => {
       });
   });
 
-  test("POST /api/products - Check if message from body is 'You have registered a new product!", async () => {
+  test("POST /api/products - Check if message from body is 'You have registered a new product!'", async () => {
     const newProduct = { name: "Azalea", price: 6 };
     const res = await request(app).post("/api/products").send(newProduct);
     const actual = res.body.message;
@@ -82,8 +82,7 @@ describe("Test product endpoints", () => {
     expect(actual).toBe(expected);
   });
 
-
-  test("POST /api/products - Check if negativa tester", async () => {
+  test("POST /api/products - Check if price is negativ number and expected message 'Price must be a positiv number and integer'", async () => {
     const newProduct = { name: "Azalea", price: -6 };
     const res = await request(app).post("/api/products").send(newProduct);
     const actual = res.body.message;
@@ -93,9 +92,38 @@ describe("Test product endpoints", () => {
 
   //----------------- Test PUT /api/products/:id ------------------- //
 
-  // test if id are valid uuid
-  // tes if name are string
-  // test if price is a positive number  and integer
+  test("PUT /api/products/:id - Check if content-type are JSON and status 200", (done) => {
+    request(app)
+      .put(`/api/products/${id}`)
+      .send({
+        name: "Hortensia",
+        price: 45,
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  test("PUT /api/products/:id - Check if message from body is 'Product has updated!'", async () => {
+    const updateProduct = { name: "Hortensia", price: 78 };
+    const res = await request(app).put(`/api/products/${id}`).send(updateProduct);
+    const actualMessage = res.body.message;
+    const expected = "Product has updated!"
+    expect(actualMessage).toBe(expected);
+  });
+
+  test("PUT /api/products/:id - Check if key name is not word and expected message 'Name must be words'", async () => {
+    const updateProduct = { name: 999 , price: 78 };
+    const res = await request(app).put(`/api/products/${id}`).send(updateProduct)
+    const actualMessage = res.body.message
+    const expected = "Name must be words"
+    expect(actualMessage).toBe(expected);
+  });
+
 
   //----------------- Test DELETE /api/products/:id ------------------- //
 

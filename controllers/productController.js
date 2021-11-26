@@ -38,7 +38,7 @@ module.exports = {
   },
 
   async createNewProduct(req, res, next) {
-    // control if product already exist in database 
+    // control if product already exist in database
     try {
       let { name, price } = req.body;
 
@@ -80,7 +80,9 @@ module.exports = {
       if (name) field.name = name;
       if (price) field.price = price;
       if (!isWord(name)) {
-        throw new Error("Name must be words");
+
+        res.status(400).json({ message: "Name must be words" }); 
+        // throw new Error("Name must be words");
       }
 
       if (!isNumber(price)) {
