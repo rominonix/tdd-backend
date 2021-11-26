@@ -2,11 +2,7 @@ const Product = require("../models/product");
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { InvalidBody } = require("../errors/index");
-const { isWord } = require("../utils");
-
-// const { ne } = require("sequelize/dist/lib/operators");
-
-// const { isValidUuid } = require("../utils");
+const { isWord, isValidUuid, isNumber } = require("../utils");
 
 module.exports = {
   async getProducts(req, res, next) {
@@ -14,9 +10,6 @@ module.exports = {
       const products = await Product.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] },
       });
-      if (products.length === 0) {
-        throw new Error("This database is empty");
-      }
       res.status(200).json({ products });
     } catch (error) {
       next(error);
@@ -26,10 +19,6 @@ module.exports = {
   async getProductById(req, res, next) {
     try {
       const { id } = req.params;
-
-      // if(!isValidUuid) {
-      //   throw new Error("This id need have a uuid format");
-      // }
       const product = await Product.findOne({
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: {
@@ -39,8 +28,8 @@ module.exports = {
         },
       });
 
-      if (!id) {
-        throw new Error("You must to give a valid product id");
+      if (!id || !isValidUuid(id)) {
+        throw new Error("This id are not valid");
       }
       res.json({ product });
     } catch (error) {
@@ -49,24 +38,35 @@ module.exports = {
   },
 
   async createNewProduct(req, res, next) {
+    // control if product already exist in database 
     try {
       let { name, price } = req.body;
 
-      // if (!name || !price) {
-      //   throw new InvalidBody();
-      // }
-      if (!isWord(name)) {
-        throw new Error("The name must be words");
+      if (!name || !price) {
+        res.status(400).json({
+          message: "Must have name and price",
+        });
+        // throw new InvalidBody();
       }
-      let id = uuidv4();
-      let newProduct = await Product.create({
-        id: id,
-        name: name,
-        price: price,
-      });
-      res.status(201).json({
-        message: "You have registered a new product!",
-      });
+      if (!isWord(name)) {
+        throw new Error("Name must be words");
+      }
+
+      if (!isNumber(price)) {
+        res.status(400).json({
+          message: "Price must be a positiv number and integer",
+        });
+      } else {
+        let id = uuidv4();
+        let newProduct = await Product.create({
+          id: id,
+          name: name,
+          price: price,
+        });
+        res.status(201).json({
+          message: "You have registered a new product!",
+        });
+      }
     } catch (error) {
       next(error);
     }
@@ -79,6 +79,13 @@ module.exports = {
       const field = {};
       if (name) field.name = name;
       if (price) field.price = price;
+      if (!isWord(name)) {
+        throw new Error("Name must be words");
+      }
+
+      if (!isNumber(price)) {
+        throw new Error("Price must be a number");
+      }
 
       const getProduct = await Product.findOne({ where: { id } });
       if (!getProduct) {
@@ -86,7 +93,7 @@ module.exports = {
       }
 
       await Product.update(field, { where: { id } });
-      res.json({ message: "Product has updated!" });
+      res.status(200).json({ message: "Product has updated!" });
     } catch (error) {
       next(error);
     }

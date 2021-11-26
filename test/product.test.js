@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { isValidUuid, isWord } = require("../utils");
-let id = "9c3caead-4f6d-4625-adf4-d9429ade87f2";
+let id = "6aea66a5-b636-4f5e-8df6-fbb98f053657";
 
 describe("Test product endpoints", () => {
   //----------------- Test GET /api/products/ ------------------- //
@@ -50,24 +50,13 @@ describe("Test product endpoints", () => {
 
   test("GET /api/products/:id - Check if id is a valid uuid", async () => {
     const res = await request(app).get(`/api/products/${id}`);
-    const actual = isValidUuid(id);
+    const validId = res.body.product.id;
+    const actual = isValidUuid(validId);
     const expected = true;
     expect(actual).toBe(expected);
   });
 
   //----------------- Test POST /api/products/ ------------------- //
-
-  // test("POST /api/products/ - Check if content-type are TEXT/HTML and status 500", (done) => {
-  //   request(app)
-  //     .post(`/api/products`)
-  //     // .set("Accept", "application/json")
-  //     .expect("Content-Type", "text/html; charset=utf-8")
-  //     .expect(201)
-  //     .end((err, res) => {
-  //       if (err) return done(err);
-  //       return done();
-  //     });
-  // });
 
   test("POST /api/products - Check if content-type are JSON and status created 201", (done) => {
     request(app)
@@ -85,30 +74,22 @@ describe("Test product endpoints", () => {
       });
   });
 
-  test("POST /api/products - Check if message from body is 'You have registered a new product!'", (done) => {
-    request(app)
-      .post("/api/products")
-      .send({
-        name: "Rose",
-        price: 66,
-      })
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
-      .expect(201)
-      .expect((res) =>{
-        res.body.message = 'You have registered a new product!'
-      })
-      .end((err) => {
-        if (err) return done(err);
-        done();
-      });
+  test("POST /api/products - Check if message from body is 'You have registered a new product!", async () => {
+    const newProduct = { name: "Azalea", price: 6 };
+    const res = await request(app).post("/api/products").send(newProduct);
+    const actual = res.body.message;
+    const expected = "You have registered a new product!";
+    expect(actual).toBe(expected);
   });
 
 
- 
-  // test if name is string
-  // test if price is a positive number  and integer
-  // test if id is string
+  test("POST /api/products - Check if negativa tester", async () => {
+    const newProduct = { name: "Azalea", price: -6 };
+    const res = await request(app).post("/api/products").send(newProduct);
+    const actual = res.body.message;
+    const expected = "Price must be a positiv number and integer";
+    expect(actual).toBe(expected);
+  });
 
   //----------------- Test PUT /api/products/:id ------------------- //
 
