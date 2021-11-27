@@ -1,6 +1,6 @@
 function controlLenght() {}
 
-function isNumber(number) {
+function isValidNumber(number) {
   if (typeof number !== "number") {
     return false;
   } else if(typeof number === 'string'){
@@ -43,6 +43,5 @@ function isLetter(x) {
   return letters.includes(x.toLowerCase());
 }
 
-module.exports = { controlLenght, isWord, isNumber, isValidUuid };
+module.exports = { controlLenght, isWord, isValidNumber, isValidUuid };
 
-// module.exports = { isWord }

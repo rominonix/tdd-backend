@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { isValidUuid, isWord } = require("../utils");
+const { isValidUuid } = require("../utils");
 let id = "da5499de-bcef-41b3-9f7f-b6e536cb1e4c";
 
 describe("Test product endpoints", () => {

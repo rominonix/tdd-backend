@@ -2,7 +2,7 @@ const Product = require("../models/product");
 const { v4: uuidv4 } = require("uuid");
 const { Op } = require("sequelize");
 const { InvalidBody } = require("../errors/index");
-const { isWord, isValidUuid, isNumber } = require("../utils");
+const { isWord, isValidUuid, isValidNumber } = require("../utils");
 
 module.exports = {
   async getProducts(req, res, next) {
@@ -52,7 +52,7 @@ module.exports = {
         throw new Error("Name must be words");
       }
 
-      if (!isNumber(price)) {
+      if (!isValidNumber(price)) {
         res.status(400).json({
           message: "Price must be a positiv number and integer",
         });
@@ -85,7 +85,7 @@ module.exports = {
         // throw new Error("Name must be words");
       }
 
-      if (!isNumber(price)) {
+      if (!isValidNumber(price)) {
         throw new Error("Price must be a number");
       }
 
