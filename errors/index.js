@@ -38,9 +38,9 @@ class tokenExpired extends productError{
     }
 }
 class userNotFound extends productError{
-    constructor(login){
+    constructor(){
         super()
-        this.message=`user with login ${login} not found`
+        this.message=`user not found`
         this.errorCode=404
     }
     

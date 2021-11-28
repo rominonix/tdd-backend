@@ -17,10 +17,7 @@ module.exports = {
         })
         try {
             if (!user) {
-                // throw new error ("User not found")
-                //res.json("error:user with 123 not found")
-                throw new userNotFound(login)
-                //throw res.json("user with 123 not found")
+                throw new userNotFound()
             }
             res.json({ user })
         } catch (error) { next(error) }
