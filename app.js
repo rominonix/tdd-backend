@@ -8,8 +8,9 @@ app.use(express.json());
 
 
 //app.use("/api", routes.productRoutes)
-// app.use("/api", routes.cartRoutes)
 app.use("/api"  , routes.userRoutes)
+app.use("/api", routes.cartRoutes)
+
 
 const PORT = process.env.PORT || 5000
 
