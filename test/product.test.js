@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { isValidUuid } = require("../utils");
-let id = "da5499de-bcef-41b3-9f7f-b6e536cb1e4c";
+let id = "d3fb7580-2eb7-48c3-a341-1fc9ec35819c";
 
 describe("Test product endpoints", () => {
   //----------------- Test GET /api/products/ ------------------- //

@@ -82,6 +82,7 @@ module.exports = {
       if (!isWord(name)) {
 
         res.status(400).json({ message: "Name must be words" }); 
+        return 
         // throw new Error("Name must be words");
       }
 
