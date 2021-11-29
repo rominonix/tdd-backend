@@ -44,6 +44,22 @@ class productNotFound extends productError{
         this.errorCode=404
     }
 }
+class userNotFound extends productError{
+    constructor(){
+        super()
+        this.message=`user not found`
+        this.errorCode=404
+    }
+    
+}
+class    userIsExist extends productError{
+    constructor(){
+        super()
+        this.message=`user has already created`
+        this.errorCode=405
+    }
+    
+}
 
 class cartItemNotFound extends productError{
     constructor(ProductId){
@@ -56,4 +72,4 @@ class cartItemNotFound extends productError{
 
 
 
-module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,productNotFound,Forbidden,cartItemNotFound }
+module.exports={ productError,InvalidBody,InvalidCredentials,unauthorized,tokenExpired,userNotFound,Forbidden ,userIsExist,cartItemNotFound}
