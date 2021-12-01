@@ -1,0 +1,32 @@
+{
+  "name": "plants-project",
+  "version": "1.0.0",
+  "description": "Er uppgift är att skriva ett REST API för en webbshop, med hjälp av TDD. Det betyder att ni så att säga ska koda baklänges:",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "start":"nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nilufar1026/Plants-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nilufar1026/Plants-project/issues"
+  },
+  "homepage": "https://github.com/Nilufar1026/Plants-project#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "sequelize": "^6.12.0-alpha.1",
+    "sqlite3": "^5.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "supertest": "^6.1.6"
+  }
+}
